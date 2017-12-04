@@ -12,7 +12,7 @@ const app = express();
 // An express server has a number of route handlers associated with it.
 // By calling app.get, we are creating a new route handler.
 app.get('/', (req, res) => {
-  res.send({ hi: 'there' });
+  res.send({ bye: 'buddy' });
 });
 
 // Here, express is telling NODE to listen in on port 5000.
