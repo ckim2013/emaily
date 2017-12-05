@@ -6,6 +6,7 @@
 const express = require('express');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const keys = require('./config/keys');
 
 
 // By invoking express(), we are creating a new application that represents
@@ -19,7 +20,27 @@ const app = express();
 //   res.send({ bye: 'buddy' });
 // });
 
-passport.use(new GoogleStrategy());
+// The callback key is the url that the client will get sent to once he/she
+// grants permission to our app.
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: keys.googleClientID,
+      clientSecret: keys.googleClientSecret,
+      callbackURL: '/auth/google/callback'
+    },
+    accessToken => {
+      console.log(accessToken);
+    }
+  )
+);
+
+app.get(
+  '/auth/google',
+  passport.authenticate('google', {
+  scope: ['profile', 'email']
+  })
+);
 
 // Here, express is telling NODE to listen in on port 5000.
 const PORT = process.env.PORT || 5000;
