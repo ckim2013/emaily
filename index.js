@@ -4,43 +4,14 @@
 // Node.js does not have support for ES2015 modules, at least not at the
 // creation of the course. This is not a problem though for frontend React.
 const express = require('express');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const keys = require('./config/keys');
-
+require('./services/passport');
 
 // By invoking express(), we are creating a new application that represents
 // a running express app. Inside a single node.js project, we can have multiple
 // express apps.
 const app = express();
 
-// An express server has a number of route handlers associated with it.
-// By calling app.get, we are creating a new route handler.
-// app.get('/', (req, res) => {
-//   res.send({ bye: 'buddy' });
-// });
-
-// The callback key is the url that the client will get sent to once he/she
-// grants permission to our app.
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: keys.googleClientID,
-      clientSecret: keys.googleClientSecret,
-      callbackURL: '/auth/google/callback'
-    },
-    accessToken => {
-      console.log(accessToken);
-    }
-  )
-);
-
-app.get(
-  '/auth/google',
-  passport.authenticate('google', {
-  scope: ['profile', 'email']
-  })
-);
+require('./routes/authRoutes')(app);
 
 // Here, express is telling NODE to listen in on port 5000.
 const PORT = process.env.PORT || 5000;
