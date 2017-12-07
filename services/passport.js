@@ -10,7 +10,14 @@ passport.serializeUser((user, done) => {
   // generated id instead of profile.id because this allows for flexibility
   // just in case we want to use other types of Oauth and not just google.
   done(null, user.id);
+});
 
+passport.deserializeUser((id, done) => {
+  User.findById(id)
+      .then(user => {
+        done(null, user);
+      }
+    );
 });
 
 // The callback key is the url that the client will get sent to once he/she
