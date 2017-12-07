@@ -5,6 +5,14 @@ const keys = require('../config/keys');
 
 const User = mongoose.model('users');
 
+passport.serializeUser((user, done) => {
+  // The user.id is not the same as the profile.id! We use the mongodb
+  // generated id instead of profile.id because this allows for flexibility
+  // just in case we want to use other types of Oauth and not just google.
+  done(null, user.id);
+
+});
+
 // The callback key is the url that the client will get sent to once he/she
 // grants permission to our app.
 passport.use(
@@ -24,14 +32,14 @@ passport.use(
       User.findOne({ googleId: profile.id })
           .then(existingUser => {
             if (existingUser) {
-              // We already have a record with a given profile ID
-              // If we found a user, then everything is fine so we pass in null to
-              // the error parameter.
+              // We already have a record with a given profile ID.
+              // If we found a user, then everything is fine so we pass
+              // in null to the error parameter.
               done(null, existingUser);
             } else {
-              // We don't have a user record with this ID so we will make one
-              // Here we create a user model instance and then save it (using save()) which
-              // returns a promise
+              // We don't have a user record with this ID so we will make one.
+              // Here we create a user model instance and then save it
+              // (using save()) which returns a promise.
               new User({ googleId: profile.id })
                   .save()
                   .then(user => done(null, user));
