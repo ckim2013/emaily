@@ -25,10 +25,16 @@ passport.use(
           .then(existingUser => {
             if (existingUser) {
               // We already have a record with a given profile ID
+              // If we found a user, then everything is fine so we pass in null to
+              // the error parameter.
+              done(null, existingUser);
             } else {
               // We don't have a user record with this ID so we will make one
-              // Here we create a user instance and then save it (using save())
-              new User({ googleId: profile.id }).save();
+              // Here we create a user model instance and then save it (using save()) which
+              // returns a promise
+              new User({ googleId: profile.id })
+                  .save()
+                  .then(user => done(null, user));
             }
           });
     }
