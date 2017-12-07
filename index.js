@@ -11,6 +11,7 @@ const keys = require('./config/keys');
 // the code to run, we can just require without assigning the require to
 // any variable.
 require('./services/passport');
+require('./models/User');
 
 mongoose.connect(keys.mongoURI);
 
