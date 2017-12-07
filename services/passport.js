@@ -19,8 +19,18 @@ passport.use(
       // console.log('refreshToken', refreshToken);
       // console.log('profile', profile);
       // console.log('done', done);
-      // Here we create a user instance and then save it (using save())
-      new User({ googleId: profile.id }).save();
+
+      // This query returns a promise
+      User.findOne({ googleId: profile.id })
+          .then(existingUser => {
+            if (existingUser) {
+              // We already have a record with a given profile ID
+            } else {
+              // We don't have a user record with this ID so we will make one
+              // Here we create a user instance and then save it (using save())
+              new User({ googleId: profile.id }).save();
+            }
+          });
     }
   )
 );
