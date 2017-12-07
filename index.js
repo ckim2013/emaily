@@ -7,11 +7,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
 
+// Order of require matters a lot!
+require('./models/User');
 // Since we are not returning anything in passport.js file and just require
 // the code to run, we can just require without assigning the require to
 // any variable.
 require('./services/passport');
-require('./models/User');
 
 mongoose.connect(keys.mongoURI);
 

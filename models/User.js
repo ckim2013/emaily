@@ -6,4 +6,6 @@ const userSchema = new Schema({
   googleId: String
 });
 
+// Two arguments mean we are trying to load something into mongoose
+// Single argument means we are trying to fetch something out of mongoose
 mongoose.model('users', userSchema);
