@@ -20,7 +20,6 @@ passport.deserializeUser((id, done) => {
     );
 });
 
-
 // The callback key is the url that the client will get sent to once he/she
 // grants permission to our app.
 passport.use(
@@ -28,7 +27,8 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: '/auth/google/callback'
+      callbackURL: '/auth/google/callback', // We could place in actual domain but relative path is easier
+      proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
       // console.log('accessToken', accessToken);
