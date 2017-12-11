@@ -28,7 +28,7 @@ passport.use(
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
       callbackURL: '/auth/google/callback', // We could place in actual domain but relative path is easier
-      proxy: true
+      proxy: true // By default, the strategy assumes that if our request from the browser when through a proxy, the request should no longer be https. Thus, we need to set the value of proxy to true so make the google oauth work or else we would get an error.
     },
     (accessToken, refreshToken, profile, done) => {
       // console.log('accessToken', accessToken);
