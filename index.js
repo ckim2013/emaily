@@ -24,6 +24,8 @@ mongoose.connect(keys.mongoURI);
 // express apps.
 const app = express();
 
+// These app calls are wiring up middleware inside of our application.
+// Middleware incoming requests to our app before sending off to route handlers.
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000, // Cookie will last for 30 days
