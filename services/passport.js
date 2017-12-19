@@ -55,16 +55,16 @@ passport.use(
     //       });
     // }
 
-    // More modern approac on handling promises
+    // More modern approach on handling promises
     async (accessToken, refreshToken, profile, done) => {
       const existingUser = await User.findOne({ googleId: profile.id });
 
       if (existingUser) {
-        done(null, existingUser);
-      } else {
-        const user = await User({ googleId: profile.id }).save();
-        done(null, user);
+        return done(null, existingUser);
       }
+
+      const user = await User({ googleId: profile.id }).save();
+      done(null, user);
     }
   )
 );
