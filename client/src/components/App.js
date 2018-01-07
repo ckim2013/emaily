@@ -3,9 +3,11 @@
 // capital letter. Otherwise, if the file returns a function or a series of
 // function, we will label the file with lowercase.
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Header from './Header';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
+import Header from './Header';
 // Dummy components
 // const Header = () => <h2>Header</h2>;
 const Dashboard = () => <h2>Dashboard</h2>;
@@ -35,7 +37,7 @@ class App extends React.Component {
     // In future versions of react, componentwillmount might be called
     // on multiple times automatically so by convention, didmount is the
     // preferred location to make any type of initial ajax requests
-    
+    this.props.fetchUser();
   }
 
   render() {
@@ -54,4 +56,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default connect(null, actions)(App);
