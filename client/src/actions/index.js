@@ -4,7 +4,7 @@ import { FETCH_USER } from './types';
 // export const fetchUser = () => {
 //   return function(dispatch) {
 //     axios.get('/api/current_user')
-//          .then(res => dispatch({ type: FETCH_USER, payload: res }));
+//          .then(res => dispatch({ type: FETCH_USER, payload: res.data }));
 //   };
 // };
 
@@ -17,11 +17,29 @@ import { FETCH_USER } from './types';
 //
 // const fetchUser = () => dispatch => (
 //   axios.get('/api/current_user')
-//        .then(res => dispatch(getUser(res)))
+//        .then(res => dispatch(getUser(res.data)))
 // );
 
 // es2017!!
+// export const fetchUser = () => async dispatch => {
+//   const res = await axios.get('/api/current_user');
+//   dispatch({ type: FETCH_USER, payload: res.data });
+// }
+// which can be further reduced to...
+// export const fetchUser = () => async dispatch => (
+//   dispatch({
+//     type: FETCH_USER,
+//     payload: (await axios.get('/api/current_user')).data
+//   })
+// )
+
 export const fetchUser = () => async dispatch => {
-  const res = await axios.get('/api/current_user');
-  dispatch({ type: FETCH_USER, payload: res });
+  try {
+    dispatch({
+      type: FETCH_USER,
+      payload: (await axios.get('/api/current_user')).data
+    })
+  } catch (error) {
+    console.log('ERROR!', error);
+  }
 }
