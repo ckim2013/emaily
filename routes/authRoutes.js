@@ -14,9 +14,16 @@ module.exports = (app) => {
     })
   );
 
+  // After user comes back from the oauth flow, passport middleware
+  // will take over in authenticate('google') then passes the request on to the
+  // arrow function which takes the request in and tells the response to inform
+  // the browser that it needs to go to another route.
   app.get(
     '/auth/google/callback',
-    passport.authenticate('google')
+    passport.authenticate('google'),
+    (req, res) => {
+      res.redirect('/surveys');
+    }
   );
 
   app.get('/api/logout', (req, res) => {
