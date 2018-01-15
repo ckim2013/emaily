@@ -38,7 +38,16 @@ export const fetchUser = () => async dispatch => {
     dispatch({
       type: FETCH_USER,
       payload: (await axios.get('/api/current_user')).data
-    })
+    });
+  } catch (error) {
+    console.log('ERROR!', error);
+  }
+}
+
+export const handleToken = token => async dispatch => {
+  try {
+    const res = await axios.post('/api/stripe');
+    dispatch({ type: FETCH_USR, payload: res.data });
   } catch (error) {
     console.log('ERROR!', error);
   }
