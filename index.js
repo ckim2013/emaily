@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 // To tell passport to make use of the cookies
 const passport = require('passport');
+const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 
 // Order of require matters a lot!
@@ -24,6 +25,10 @@ mongoose.connect(keys.mongoURI);
 // express apps.
 const app = express();
 
+// Parse the body and assign it to the req.body property of the
+// incoming request object.
+app.use(bodyParser.json());
+
 // These app calls are wiring up middleware inside of our application.
 // Middleware incoming requests to our app before sending off to route handlers.
 app.use(
@@ -38,6 +43,9 @@ app.use(passport.session());
 // We could have required and assigned to a const, and then call the const
 // with the app but this is not necessary. We can just do below.
 require('./routes/authRoutes')(app);
+
+// We created another routes file to handle billing!
+require('./routes/billingRoutes')(app);
 
 // Here, express is telling NODE to listen in on port 5000.
 const PORT = process.env.PORT || 5000;
