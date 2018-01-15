@@ -47,7 +47,7 @@ export const fetchUser = () => async dispatch => {
 export const handleToken = token => async dispatch => {
   try {
     const res = await axios.post('/api/stripe');
-    dispatch({ type: FETCH_USR, payload: res.data });
+    dispatch({ type: FETCH_USER, payload: res.data });
   } catch (error) {
     console.log('ERROR!', error);
   }
