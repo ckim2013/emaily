@@ -3,6 +3,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    // this.renderContent = this.renderContent.bind(this);
+  }
+
   renderContent() {
     switch (this.props.auth) {
       case null:
