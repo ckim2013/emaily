@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Payments from 'Payments';
+import Payments from './Payments';
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    // this.renderContent = this.renderContent.bind(this);
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.renderContent = this.renderContent.bind(this);
+  // }
 
   renderContent() {
     switch (this.props.auth) {
@@ -16,12 +16,16 @@ class Header extends React.Component {
       case false:
         return <li><a href='/auth/google'>Login with Google</a></li>;
       default:
-        return <li><a href='/api/logout'>Log out</a></li>;
+        return [
+          <li key='1'><Payments /></li>,
+          <li key='2'><a href='/api/logout'>Log out</a></li>
+        ];
+
     }
   }
 
   render() {
-    console.log('header props', this.props);
+    // console.log('header props', this.props);
 
     // Using an anchor tag rather than a Link will refresh the page
     // which doesn't look good.
